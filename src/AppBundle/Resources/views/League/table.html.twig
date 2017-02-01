@@ -1,0 +1,37 @@
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Klub</th>
+                <th>OU</th>
+                <th>3</th>
+                <th>1</th>
+                <th>0</th>
+                <th>DG</th>
+                <th class="sort" style="cursor: pointer;" data-sort="received">PG</th>
+                <th class="sort" style="cursor: pointer;" data-sort="goalDifference"><i class="fa fa-sort" aria-hidden="true">RG</i></th>
+                <th class="sort" style="cursor: pointer;" data-sort="points">Bodovi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in table %}
+               <tr>
+                    <td>{{loop.index0 + 1}}</td>
+                    <td><a href = "{{path('AppBundle_League_teamsPageIndividual', 
+                                {'teamId': team.id})}}">{{team['name']}}
+                        </a>
+                    </td>
+                    <td>{{ team['played']}}</td>
+                    <td>{{ team['wins'] }}</td>
+                    <td>{{ team['tie'] }}</td>
+                    <td>{{ team['loses'] }}</td>
+                    <td>{{ team['scored']}}</td>
+                    <td>{{ team['received']}}</td>
+                    <td>{{ team['difference']}}</td>
+                    <td>{{ team['points']}}</td>
+                </tr>
+                {% else %}
+                    No teams found.
+            {% endfor %}
+        </tbody>
+    </table>

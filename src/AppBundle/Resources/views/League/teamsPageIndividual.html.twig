@@ -1,0 +1,80 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+	<h2>
+        Podaci za klub: {{team.name}}
+	</h2>
+	<form>
+	    {% if (pair == false) and (user != 'anon.') %}
+            <button type="button" class="btn btn-success pull-right">Pretplati me</button>
+        {% elseif pair == true %}
+            <button type="button" class="btn btn-primary pull-right">Ukini pretplatu</button>
+        {% endif %}
+	</form>
+    <div class="row" style="margin-top: 60px;">
+        <ul class="list-group col-md-4 ">
+            {{ include('AppBundle:League:showScheduleForTeam.html.twig', {'schedules': schedules}, with_context=false) }}
+        </ul>
+        <ul class="list-group col-md-6 col-md-offset-2 ">
+            {{ include('AppBundle:League:showResultForTeam.html.twig', {'results': results}, with_context=false) }}
+        </ul>
+    </div>
+	
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent()}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var follow = "{{ pair}}" ? 1 : 0;
+            $(".btn").click(function() {
+                {% if user != 'anon.' %} 
+                    if(follow === 0) {
+                        $(this).removeClass('btn-success').addClass('btn-primary');
+                        $(this).text("Ukini pretplatu");
+                        
+                        var url = '{{path("AppBundle_User_followTeam", {'userId': user.id, 'teamId':  team.id}) }}'; 
+                        /**
+                         * Zbog nepoznatog razloga u URI se doda $amp => metoda zaobilaska pogreške
+                         */
+                        url = url.replace("&amp;", "&");
+                        var ajaxUrl = url;
+
+                        $.ajax({
+                            type: "POST",
+                            url: ajaxUrl,
+                            dataType: "html",
+                            success: function (data) {
+                                if (data !== '') {
+                                    $('.btn').html(data);
+                                    follow = 1;
+                                }
+                            }
+                        });    
+                    }else {
+                        $(this).removeClass('btn-primary').addClass('btn-success');
+                        $(this).text("Pretplati me");
+                        var url = '{{path("AppBundle_User_unFollowTeam", {'userId': user.id, 'teamId':  team.id}) }}';
+                        /**
+                         * Zbog nepoznatog razloga u URI se doda $amp => metoda zaobilaska pogreške
+                         */
+                        url = url.replace("&amp;", "&");
+                        var ajaxUrl = url;
+
+                        $.ajax({
+                            type: "POST",
+                            url: ajaxUrl,
+                            dataType: "html",
+                            success: function (data) {
+                                if (data !== '') {
+                                    $('.btn').html(data);
+                                    follow = 0;
+                                }
+                            }
+                        }); 
+                    }                    
+                {% endif %}
+            });
+        });
+    </script>
+{% endblock %}

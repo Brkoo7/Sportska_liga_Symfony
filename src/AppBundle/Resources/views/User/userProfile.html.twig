@@ -1,0 +1,48 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    <h3>Privatni profil korisnika: {{user.email}}</h3>
+    <form class="form-group">
+        <label for="sel1">Klubovi koje pratim: </label>
+        <select id="sel1" style="height: 30px;">
+            <option id="default">Odaberi klub</option>
+            {% for team in teams %}
+		 	    <option class="changeTeam" data-team="{{team.teamName.id}}">{{team.teamName.name}}</option>
+            {% endfor %}   
+		</select>
+	</form>
+    <div class="row" id="contentForTeam">
+        
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{parent()}}
+    
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	$("#sel1").change(function() {
+    		$(this).find('#default').remove();
+
+  			var selected_team = $("#sel1 option:selected").data('team');
+  			var url = '{{path("AppBundle_User_changeTeam", {'teamId': 'team_id'}) }}'; 
+			url = url.replace("team_id", selected_team);
+        
+  			var ajaxUrl = url;
+
+  			$.ajax({
+    			type: "GET",
+    			url: ajaxUrl,
+    			dataType: "html",
+    			success: function (data) {
+    				if (data !== '') {   
+                        $('.teamContent').removeClass('hidden');
+                        $('#contentForTeam').html(data);
+    				}
+    			}
+    		});
+		});
+    });
+    </script>
+{% endblock %}

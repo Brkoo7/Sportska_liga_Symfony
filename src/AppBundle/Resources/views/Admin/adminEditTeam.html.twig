@@ -1,0 +1,30 @@
+{% extends 'AppBundle:Admin:adminTeams.html.twig' %}
+
+
+{% block sidebar %}
+
+<ul class="list-group col-md-5  aside">
+    <p id="message"></p>
+    <h2>Uređivanje tima: {{team.name}}</h2>
+    <hr />
+    {{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form._token) }}
+    {{ form_row(form.address) }}
+    <button type="submit" class="btn btn-sm btn-danger update" formnovalidate>Ažuriraj</button> 
+</ul>
+
+{% endblock sidebar %}
+
+{% block javascripts %}
+    {{parent() }}
+    <script type="text/javascript" src="{{ asset('js/formsEdit.js') }}"></script>
+{% endblock %}
+                
+           
+
+
+
+
+
+

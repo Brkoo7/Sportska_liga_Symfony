@@ -1,0 +1,80 @@
+{% extends 'AppBundle:Admin:admin.html.twig' %}
+
+{% block stylesheets %}
+    {{parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datepicker.css') }}" />
+{% endblock %}
+
+{% block content %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+             <!-- Page Heading -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Upravitelj rasporedom  
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="index.html">Sučelje</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-file"></i> Raspored
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="list-group col-md-6">
+                    <button type="button" id="addOneItem" class="btn btn-md btn-info">Dodaj raspored</button>
+                    
+                    <div id="addCategory">
+                        {% if editFlag == false %}
+                        {{ form_start(form) }}
+                        {{ form_row(form._token) }}
+                        {{ form_row(form.homeTeam) }}
+                        {{ form_row(form.awayTeam) }}
+                        {{ form_row(form.date_) }}
+                        <button type="submit" class="btn btn-sm btn-danger" formnovalidate>Save</button>
+                        
+                        <i class="fa fa-2x fa-times close" aria-hidden="true"></i>
+                        {% endif %}
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Domaći tim</th>
+                                <th>Gostujući tim</th>
+                                <th>Datum</th>
+                                <th>Opcije</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for schedule in schedules %}
+                            <tr>
+                                <td>{{schedule.homeTeam.name}}</td>
+                                <td>{{schedule.awayTeam.name}}</td>
+                                <td>{{schedule.date_|date('Y-m-d') }}</td>
+                                <td>
+                                    <a href="{{ path('AppBundle_Admin_adminEditSchedule', {'scheduleId': schedule.id})}}" class="btn   btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                                    <a href="{{ path('AppBundle_Admin_adminDeleteSchedule', {'scheduleId': schedule.id})}}"> <button type="button" class="btn btn-xs btn-danger">Izbriši</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </ul>
+                {% block sidebar %}
+
+                {% endblock sidebar %}
+            </div> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent() }}
+    <script src="{{ asset('js/vendors/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/formsAdd.js') }}"></script>
+    
+{% endblock %}

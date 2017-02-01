@@ -1,0 +1,214 @@
+/**
+ * G L O B A L N I    S T I L O V I
+ */
+body {
+	margin-top: 0;
+	background-color: white;
+}
+.white
+{
+	color: white;
+}
+.red
+{
+	color:red;
+}
+.navbar-inverse
+{
+	border-radius: 0px;
+	border-bottom: 1px solid #4b5b5a;
+	border: 1px solid black;
+	border-top: 2px solid black;
+}
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:active
+{
+	background-color: #EF2743 !important;
+}
+
+/* Promjena funkcionalnosti
+	 - na prelazak misa pokazi dropdown-menu */
+
+ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
+@media (min-width: 979px) {
+  ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+  }
+}
+.navbar .dropdown-menu {
+ 	margin-top: 0px;
+ 	padding: 0px;
+}
+.dropdown-menu li {
+	
+}
+
+
+/* Forme */
+
+form
+{
+	margin-top: 20px;
+
+}
+form > div
+{
+	display: inline-block;
+	margin-right: 20px;
+	max-width: 210px;
+}
+
+form > div > ul
+{
+	display: block;
+	list-style-type: none;
+	padding-left: 0;
+	color: red;
+	font-size: 14px;
+}
+
+
+/**
+ * K O R I S N I Č K A    S T R A N I C A
+ */
+header 
+{
+	background-color: #222222;
+	padding: 30px;
+}
+header > .container
+{
+	padding-left: 30px;
+}
+#logo-text-main
+{
+	display: inline-block;
+	font-size: 50px;
+	position: relative;
+	top: 13px;
+	float:left;
+}
+#bs-example-navbar-collapse-1 {
+	padding-left: 0px;
+}
+
+#logos 
+{
+	float: right;
+	margin-right: 30px;
+	position:relative;
+	top: 8px;
+}
+.logo {
+	display: inline-block;
+	margin-right: 7px;
+}
+main .container 
+{
+	padding-left: 25px;
+}
+main > .container > form > div{
+	display:block;
+}
+
+
+
+/**
+ * A D M I N   S T R A N I C A
+ */
+
+#admin-header #logo
+{
+	display:inline-block;
+	position: relative;
+	top: 7px;
+}
+
+#addCategory
+{
+	display: none;
+	position: relative;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+	background-color: #EEEEEE;
+	border-radius: 10px;
+	border: 4px solid #9E9E9E;
+	box-shadow: 3px 3px 7px grey;
+}
+
+#addCategory form {
+	margin-top: 0px;
+}
+
+#addCategory label
+{
+	display: block;
+}
+
+.close
+{
+	position: absolute;
+	top: -3px;
+	right: 3px;
+}
+.aside {
+	margin-left: 18px;
+	background-color: #EEEEEE;
+	padding: 10px;
+	margin-top: 62px;
+	border-radius: 10px;
+}
+.aside form button{
+	display: block;
+	margin-top: 25px;
+}
+
+.aside hr {
+	margin-top: 0px;
+}
+
+#admin-text 
+{
+    margin-top: -20px;
+    margin-left: -10px;
+    font-size: 18px !important;
+}
+
+#admin-header > div
+{
+    width: 180px;
+    float:left;
+    text-align: center;
+}
+.list-group {
+	padding-left: 15px;
+}
+
+li .title
+{
+	position: relative;
+	top: -3px;
+	left: 10px;
+	font-weight: bold;
+}
+
+.hidden {
+	display:hidden;
+}
+.visible {
+	visibility: visible;
+}
+
+.divider {
+	margin: 3px !important;
+}
+
+.userData {
+	margin-right: 4px;
+	padding-right: 30px !important;
+}

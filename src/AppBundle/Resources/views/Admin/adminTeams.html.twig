@@ -1,0 +1,75 @@
+{% extends 'AppBundle:Admin:admin.html.twig' %}
+
+{% block content %}
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-header">
+                        Upravitelj timovima  
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="index.html">Sučelje</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-file"></i> Timovi
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="list-group col-md-6">
+                    
+                    <button type="button" id="addOneItem" class="btn btn-md btn-info">Dodaj tim</button>
+                    <div id="addCategory">
+                        {% if editFlag == false %}
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
+                        {{ form_row(form._token) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row(form.address) }}
+                        <button type="submit" class="btn btn-sm btn-danger" formnovalidate>Save</button>
+                    
+                        <i class="fa fa-2x fa-times close" aria-hidden="true"></i>
+                        {% endif %}
+                        
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID Tima</th>
+                                <th>Ime tima</th>
+                                <th>Adresa tima</th>
+                                <th>Opcije</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for team in teams %}
+                            <tr>
+                                <td>{{loop.index}}</td>
+                                <td>{{team.name}}</td>
+                                <td>{{team.address}}</td>
+                                <td>
+                                    <a href="{{ path('AppBundle_Admin_adminEditTeam', {'teamId': team.id})}}" class="btn   btn-xs btn-success"><span class="fa fa-pencil"></span></a>
+                                    <a href="{{ path('AppBundle_Admin_adminDeleteTeam', {'teamId': team.id})}}"> <button type="button" class="btn btn-xs btn-danger">Izbriši</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </ul>
+                
+                {% block sidebar %}
+
+                {% endblock sidebar %}
+            </div> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent() }}
+    <script type="text/javascript" src="{{ asset('js/formsAdd.js') }}"></script>
+    
+{% endblock %}

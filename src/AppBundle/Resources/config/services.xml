@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+      <service id="app.service.league_table" class="AppBundle\Services\LeagueTable">
+            <argument type="service" id="app.game_repository" />
+      </service>
+
+    	<service id="app.form_team_type" class="AppBundle\Form\Type\TeamType">
+  			<argument type="service" id="doctrine.orm.entity_manager" /> 
+  			<tag name="form.type" /> 
+  		</service>
+      <service id="app.form_game_type" class="AppBundle\Form\Type\GameType">
+        <argument type="service" id="doctrine.orm.entity_manager" />
+        <tag name="form.type" />
+      </service>
+      <service id="app.form_result_type" class="AppBundle\Form\Type\ResultType">
+        <argument type="service" id="doctrine.orm.entity_manager" /> 
+        <tag name="form.type" /> 
+      </service>
+  		<service id="app.validator_team_name" class="AppBundle\Validator\Constraints\ConstraintTeamNameValidator">
+  			<argument type="service" id="doctrine.orm.entity_manager" /> 
+  			<tag name="validator.constraint_validator" /> 
+  		</service>
+      
+      <service id="app.validator_schedule" class="AppBundle\Validator\Constraints\ConstraintScheduleValidator">
+        <argument type="service" id="doctrine.orm.entity_manager" /> 
+        <tag name="validator.constraint_validator" /> 
+      </service>
+
+      <service id="app.validator_team_name_letters" class="AppBundle\Validator\Constraints\ConstraintTeamNameLettersValidator">
+        <argument type="service" id="doctrine.orm.entity_manager" /> 
+        <tag name="validator.constraint_validator" /> 
+      </service>
+
+      <!-- Repozitorije definiramo kao servise -->
+      <service id="app.game_repository" class="AppBundle\Repository\GameRepository">
+          <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+          <argument>AppBundle:Game</argument>
+      </service>
+      <service id="app.team_repository" class="AppBundle\Repository\TeamRepository">
+          <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+          <argument>AppBundle:Team</argument>
+      </service>
+      <service id="app.userteam_repository" class="AppBundle\Repository\UserTeamRepository">
+          <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+          <argument>AppBundle:UserTeam</argument>
+      </service>
+      <service id="app.user_repository" class="AppBundle\Repository\UserRepository">
+          <factory service="doctrine.orm.entity_manager" method="getRepository"/>
+          <argument>AppBundle:User</argument>
+      </service>
+
+      <service id="app.form_search_parameters_type" class="AppBundle\Form\Type\SearchParametersType">
+          <argument type="service" id="doctrine.orm.entity_manager" />
+          <tag name="form.type" />
+      </service>
+
+
+    </services>
+</container>

@@ -1,0 +1,71 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+	<h1>Rezultati lige</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="button" id="addOneItem" class="btn btn-md btn-info">Filtriraj</button>
+            <div id="addCategory">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.dateFrom) }}
+                {{ form_row(form.dateTo) }}
+                
+                <button type="submit" class="btn btn-sm btn-danger" formnovalidate>Save</button>        
+                <i class="fa fa-2x fa-times close" aria-hidden="true"></i>        
+            </div>
+        </div>
+    </div>
+	
+    <div class="row">
+        <ul class="list-group col-md-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Domaći tim</th>
+                        <th>Gostujući tim</th>
+                        <th>Golovi domaći</th>
+                        <th>Golovi gosti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{result.date_| date("m/d/Y") }}</td>
+                        <td>{{result.homeTeam.name}}</td>
+                        <td>{{result.awayTeam.name}}</td>
+                        <td>{{result.homeGoals}}</td>
+                        <td>{{result.awayGoals}}</td>
+                    </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent() }}
+    <script src="{{ asset('js/vendors/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.js-datepicker').datepicker({  
+                format: 'yyyy-mm-dd'
+            });   
+        });
+        $('#addCategory').hide();
+        $('#addOneItem').click(function() {
+            $('#addCategory').toggle();
+        });
+        $('.close').click(function() {
+           $('#addCategory').hide();
+        });
+        if ($('form>div>ul').children().length > 0 ) {
+            $( '#addCategory').show();   
+            $('form>div>label:first').hide();
+        }        
+    </script> 
+{% endblock %}

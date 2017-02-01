@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <header>
+        <div class="container">
+            <p id="logo-text-main">
+                <span class="white">N</span>
+                <img id="logo" src="{{asset('images/sleague.png') }}" height="80px" width="90px" /> <span class="white">GOMETNA</span><span class="red">LIGA</span>                     
+            </p>
+        </div>
+    </header>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="  
+                    #bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Botun za login i drop-down opcije -->
+            <ul class="nav navbar-right top-nav">       
+                <li class="dropdown">
+                <!-- Stavljamo sadržaj iz AJAX-a -->
+                    <div id="userContainer">
+
+                    </div>
+                </li>
+            </ul>
+            {% if is_granted('ROLE_USER') %} 
+                <!-- Natjerao ga da pokupi autentifikaciju korisnika -->
+            {% endif %}
+
+            <span id="userContainerTemplate" class="hidden">
+                <!-- 1 - ispisuje ime korisnika -->
+                <a href="__USER_BUTTON__" class="__DROPDOWN_TOGGLE__ userData" data-toggle="__DROPDOWN__">
+                    <i class="fa fa-user" style="margin-right:5px;"></i>__USER_NAME__
+                </a>
+                <!-- 2 - dropdown menu - ukoliko je korisnik logiran -->
+                <ul class="dropdown-menu __VISIBILITY__">
+                    <li>
+                        <a href="__USER_PAGE__"><i class="fa fa-fw fa-user"></i>__USER_TITLE__</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="{{ path('logout') }}"><i class="fa fa-fw fa-power-off"></i>Odjavi se</a>
+                    </li>
+                </ul>
+            </span>
+
+            <div class="collapse navbar-collapse dropwdown" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav teamsUl">
+                    <li><a href="{{path('AppBundle_League_homePage')}}">POČETNA</a></li>
+                    <li role="presentation" class="dropdown teamsNav">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" >KLUBOVI </a>
+                        <ul class="dropdown-menu teamsNavMenu">
+                            {{ render(controller(
+                                'AppBundle:League:listTeamsNav'))}}
+                        </ul>
+                    </li>
+                    <li><a href="{{path('AppBundle_League_scheduleList')}}">RASPORED</a></li>
+                    <li><a href="{{path('AppBundle_League_resultList')}}">REZULTATI</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            {% block content %}
+                
+            {% endblock content %}
+        </div>
+    </main>
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent()}}
+    <script src="{{ asset('js/userButton.js') }}"></script>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function($) {
+            $(document).ready(function(){
+                /**
+                 * Šalje userButton objektu još jedan objekt kao parametar
+                 */
+                userButton.init({
+                    "userContainerId": "userContainer",
+                    "userContainerTemplateId": "userContainerTemplate",
+                    "userDataPath": "{{ path('AppBundle_User_userData') }}",
+                    "adminPagePath": "{{path( 'AppBundle_Admin_adminPage') }}",
+                    "loginPath": "{{ path('AppBundle_Security_login') }}",
+                    "userPagePath": "{{path('AppBundle_User_userProfile',{'userId': '1'}) }}"
+                });
+            });
+        })(jQuery);
+    /* ]]> */
+    </script>
+{% endblock javascripts %}

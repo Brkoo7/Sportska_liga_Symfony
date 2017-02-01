@@ -1,0 +1,57 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        #in_memory:
+        #    memory:
+        #         users:
+        #            bob:
+        #                password: $2y$12$pYznKwjrgFS7Asx9m8X3XOJ2UwXKeGMidNz5Iyx6/3mn8K7yrD556
+        #                roles: 'ROLE_USER'
+        #            ivan:
+        #                password: $2y$12$JqSDqqavTYUsFWfC06W2cuYBzBQ6XiIdsT2pWVwunB7eozMRX2rYG
+        #                roles: 'ROLE_ADMIN'
+        database_provider:
+            entity:
+                class: AppBundle:User
+                property: email
+    encoders:
+        # # Ovaj način definiranja encodera je potreban za in_memory user providere
+        # Symfony\Component\Security\Core\User\User:
+        #    algorithm: bcrypt
+        #    cost: 12
+
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 13
+        
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            provider: database_provider
+            form_login:
+                login_path: AppBundle_Security_login
+                check_path: AppBundle_Security_login
+                default_target_path: AppBundle_Security_redirect
+                
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            logout:
+                path: /logout
+                target: /
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/admin, roles: ROLE_ADMIN }

@@ -1,0 +1,52 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Tablica lige</h2>
+            <div class="content" id="leagueTable">
+                {{ include('AppBundle:League:table.html.twig', {'table': table}, with_context=false) }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent()}}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var url;
+            $("#leagueTable").on('click', '.sort', function() { 
+                $(this).css("background-color", "aqua");
+
+                switch($(this).data('sort')) {
+                    case 'goalDifference':
+                        url = '{{path("AppBundle_League_sortTableByGoalDifference", {'sortType': 'goalDifference'}) }}';
+                        break;
+                    case 'received':
+                        url = '{{path("AppBundle_League_sortTableByGoalDifference", {'sortType': 'received'}) }}';
+                        break;
+                    case 'points':
+                        url = '{{path("AppBundle_League_sortTableByGoalDifference", {'sortType': 'points'}) }}';
+                        break;
+                }
+
+                var ajaxUrl = url;
+                $.ajax({
+                    type: "GET",
+                    url: ajaxUrl,
+                    dataType: "html",
+                    success: function (data) {
+                        if (data !== '') {
+                            $('.content').html(data);
+                        }
+                    }
+                });                               
+            });
+        });
+    </script>
+{% endblock javascripts %}
+
+

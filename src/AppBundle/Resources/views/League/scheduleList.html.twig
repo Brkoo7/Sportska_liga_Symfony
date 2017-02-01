@@ -1,0 +1,28 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+	<h1>Raspored lige</h1>
+
+	<div class="row">
+        <ul class="list-group col-md-6">
+        	<table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Domaći tim</th>
+                        <th>Gostujući tim</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in schedules %}
+                    <tr>
+                        <td>{{schedule.date_ | date('Y-m-d')}}</td>
+                        <td>{{schedule.homeTeam.name}}</td>
+                        <td>{{schedule.awayTeam.name}}</td>
+                    </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </ul>
+    </div>
+{% endblock content %}

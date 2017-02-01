@@ -1,0 +1,23 @@
+<table class="table table-striped">
+    <caption>Rezultati utakmica</caption>
+    <thead>
+        <tr>
+            <th>Datum</th>
+            <th>Domaći tim</th>
+            <th>Gostujući tim</th>
+            <th>Golovi domaći</th>
+            <th>Golovi gosti</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+            <tr>
+                <td>{{result.date_| date("m/d/Y") }}</td>
+                <td>{{result.homeTeam.name}}</td>
+                <td>{{result.awayTeam.name}}</td>
+                <td>{{result.homeGoals}}</td>
+                <td>{{result.awayGoals}}</td>
+            </tr>
+        {% endfor %} 
+    </tbody>
+</table>
